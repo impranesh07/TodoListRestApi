@@ -1,28 +1,35 @@
 import React, { useEffect, useState } from 'react'
-
+import axios from 'axios'
+import Read from './Components/Read'
 const App = () => {
-  const [topic, settopic] = useState('')
+  const [name, settopic] = useState('')
   const [des, setdes] = useState('')
   const [check, setcheck] = useState(false) 
+
   const data={
-    topic:topic,
+    name:name,
     des:des
   }
 
   function dowork(e) {
-    e.preventDefault();
+    //e.preventDefault();
     setcheck(true);
   }
   useEffect(()=>{
     if (check) {
-    function post_data() {
-      console.log("Hello world",data);
-
-      settopic('');
-    setdes('');
-
-    setcheck(false);
+   async function post_data() {
+     try {
+     const response=await axios.post("http://localhost:3232/send_data",data);
+      {{alert("Data inserted")}};
+     } catch (error) {
+      console.log(error);
+     } 
     }
+
+   settopic('')
+   setdes('') 
+    setcheck(false);
+    
     post_data();  
     
     }
@@ -31,7 +38,7 @@ const App = () => {
     <div>
       <form onSubmit={dowork}>
         Topic:-<input type='text' placeholder='enter topic'
-         value={topic}
+         value={name}
          onChange={(e)=>(
           settopic(e.target.value)
          )}
@@ -44,6 +51,11 @@ const App = () => {
         />
         <button>Submit</button>
       </form>
+
+        <div className="read">
+          <Read/>
+        </div>
+
     </div>
   )
 }

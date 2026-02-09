@@ -13,5 +13,5 @@ public interface Repo extends MongoRepository<Student , String>{
     Optional<Student> findByName(String name);
 
     //create metod not retuen 
-    void deleteByname(String name);
+    String deleteByname(String name);
 }
